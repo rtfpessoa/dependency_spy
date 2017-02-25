@@ -1,0 +1,331 @@
+AllCops:
+  # Include common Ruby source files.
+  Include:
+  - '**/*.builder'
+  - '**/*.fcgi'
+  - '**/*.gemspec'
+  - '**/*.god'
+  - '**/*.jb'
+  - '**/*.jbuilder'
+  - '**/*.mspec'
+  - '**/*.opal'
+  - '**/*.pluginspec'
+  - '**/*.podspec'
+  - '**/*.rabl'
+  - '**/*.rake'
+  - '**/*.rb'
+  - '**/*.rbuild'
+  - '**/*.rbw'
+  - '**/*.rbx'
+  - '**/*.ru'
+  - '**/*.ruby'
+  - '**/*.spec'
+  - '**/*.thor'
+  - '**/*.watchr'
+  - '**/.irbrc'
+  - '**/.pryrc'
+  - '**/buildfile'
+  - '**/config.ru'
+  - '**/Appraisals'
+  - '**/Berksfile'
+  - '**/Brewfile'
+  - '**/Buildfile'
+  - '**/Capfile'
+  - '**/Cheffile'
+  - '**/Dangerfile'
+  - '**/Deliverfile'
+  - '**/Fastfile'
+  - '**/*Fastfile'
+  - '**/Gemfile'
+  - '**/Guardfile'
+  - '**/Jarfile'
+  - '**/Mavenfile'
+  - '**/Podfile'
+  - '**/Puppetfile'
+  - '**/Rakefile'
+  - '**/Snapfile'
+  - '**/Thorfile'
+  - '**/Vagabondfile'
+  - '**/Vagrantfile'
+  Exclude:
+  - 'database/**/*'
+  - 'db/**/*'
+  - 'tmp/**/*'
+  - 'vendor/**/*'
+  - 'bin/**/*'
+  - 'log/**/*'
+  DefaultFormatter: progress
+  UseCache: false
+  DisplayCopNames: false
+  TargetRubyVersion: 2.3.7
+
+Gemspec/OrderedDependencies:
+  Enabled: true
+
+Layout/CaseIndentation:
+  Enabled: true
+  IndentOneStep: true
+
+Layout/CommentIndentation:
+  Enabled: true
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+  EnforcedStyle: empty_lines_except_namespace
+
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: true
+  EnforcedStyle: empty_lines_except_namespace
+
+Layout/ExtraSpacing:
+  Enabled: true
+
+Layout/FirstParameterIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+  IndentationWidth: 2
+
+Layout/IndentArray:
+  Enabled: true
+
+Layout/IndentAssignment:
+  Enabled: true
+
+Layout/IndentHash:
+  Enabled: true
+
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+  EnforcedStyle: indented_relative_to_receiver
+  IndentationWidth: 2
+
+Layout/MultilineOperationIndentation:
+  Enabled: true
+
+Layout/SpaceAfterComma:
+  Enabled: true
+
+Layout/AlignParameters:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Layout/SpaceAroundOperators:
+  Enabled: true
+  AllowForAlignment: true
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: space
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Lint/IneffectiveAccessModifier:
+  Enabled: true
+
+Lint/LiteralAsCondition:
+  Enabled: true
+
+Lint/UnusedMethodArgument:
+  Enabled: true
+
+Lint/UselessAccessModifier:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Lint/HandleExceptions:
+  Enabled: true
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 113
+
+Metrics/BlockLength:
+  Enabled: true
+  Max: 51
+  Exclude:
+  - "spec/snyk_io_spec.rb"
+
+Metrics/ClassLength:
+  Enabled: false
+  Max: 199
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+  Max: 15
+
+Metrics/LineLength:
+  Enabled: false
+  Max: 147
+
+Metrics/MethodLength:
+  Enabled: false
+  Max: 94
+
+Metrics/ModuleLength:
+  Enabled: false
+  Max: 2557
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+  Max: 11
+
+Metrics/ParameterLists:
+  Enabled: true
+
+Performance/RedundantBlockCall:
+  Enabled: true
+
+Security/MarshalLoad:
+  Enabled: true
+
+Security/YAMLLoad:
+  Enabled: true
+
+Style/BlockDelimiters:
+  Enabled: true
+
+Style/BracesAroundHashParameters:
+  Enabled: true
+
+Style/CaseEquality:
+  Enabled: true
+
+Style/ClassCheck:
+  Enabled: true
+
+Style/ColonMethodCall:
+  Enabled: true
+
+Style/ConditionalAssignment:
+  Enabled: true
+
+Style/DateTime:
+  Enabled: true
+
+Style/DefWithParentheses:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyElse:
+  Enabled: true
+
+Style/EmptyLiteral:
+  Enabled: true
+
+Style/Encoding:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: true
+
+Style/HashSyntax:
+  Enabled: true
+  EnforcedStyle: hash_rockets
+
+Style/IdenticalConditionalBranches:
+  Enabled: true
+
+Style/IfUnlessModifier:
+  Enabled: true
+
+Style/InfiniteLoop:
+  Enabled: true
+
+Style/InverseMethods:
+  Enabled: true
+
+Style/Lambda:
+  Enabled: true
+  EnforcedStyle: lambda
+
+Style/MultilineBlockChain:
+  Enabled: true
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/Next:
+  Enabled: true
+
+Style/PercentLiteralDelimiters:
+  Enabled: true
+
+Style/RedundantSelf:
+  Enabled: true
+
+Style/RegexpLiteral:
+  Enabled: true
+  EnforcedStyle: percent_r
+
+Style/RescueModifier:
+  Enabled: true
+
+Style/SafeNavigation:
+  Enabled: true
+
+Style/SpecialGlobalVars:
+  Enabled: true
+  EnforcedStyle: use_english_names
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+  ConsistentQuotesInMultiline: true
+
+Style/StructInheritance:
+  Enabled: false
+
+Style/SymbolProc:
+  Enabled: true
+
+Style/TrailingCommaInArguments:
+  Enabled: true
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: no_comma
+
+Style/UnneededInterpolation:
+  Enabled: true
+
+Style/UnneededPercentQ:
+  Enabled: true
+
+Style/WhileUntilDo:
+  Enabled: true
+
+Style/WordArray:
+  Enabled: true
+  EnforcedStyle: brackets
+
+Style/RescueStandardError:
+  Enabled: true

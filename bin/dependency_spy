@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require "dependency_spy/cli"
+
+DependencySpy::CLI.start(ARGV)

@@ -1,0 +1,85 @@
+{
+  "name": "diff2html",
+  "version": "2.3.0",
+  "homepage": "https://diff2html.xyz",
+  "description": "Fast Diff to colorized HTML",
+  "keywords": [
+    "git",
+    "diff",
+    "pretty",
+    "side",
+    "line",
+    "side-by-side",
+    "line-by-line",
+    "character",
+    "highlight",
+    "pretty",
+    "color",
+    "html",
+    "diff2html",
+    "difftohtml",
+    "colorized"
+  ],
+  "author": {
+    "name": "Rodrigo Fernandes",
+    "email": "rtfrodrigo@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/rtfpessoa/diff2html.git"
+  },
+  "bugs": {
+    "url": "https://www.github.com/rtfpessoa/diff2html/issues"
+  },
+  "engines": {
+    "node": ">=0.12"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "release": "./scripts/release.sh",
+    "release-website": "./scripts/release-website.sh",
+    "release-bower": "./scripts/update-bower-version.sh",
+    "templates": "./scripts/hulk.js --wrapper node --variable 'browserTemplates' ./src/templates/*.mustache > ./src/templates/diff2html-templates.js",
+    "style": "npm run lint",
+    "lint": "eslint .",
+    "coverage": "istanbul cover _mocha -- -u exports -R spec ./test/**/*",
+    "check-coverage": "istanbul check-coverage --statements 90 --functions 90 --branches 85 --lines 90 ./coverage/coverage.json",
+    "test": "npm run coverage && npm run check-coverage",
+    "codacy": "cat ./coverage/lcov.info | codacy-coverage",
+    "preversion": "npm run release && npm run release-website && npm run lint && npm test",
+    "version": "npm run release-bower && git add -A src dist docs package.json bower.json",
+    "postversion": "git push && git push --tags"
+  },
+  "main": "./src/diff2html.js",
+  "browser": {
+    "fs": false
+  },
+  "dependencies": {
+    "diff": "^3.2.0",
+    "hogan.js": "^3.0.2",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.7.7",
+    "browserify": "^14.1.0",
+    "clean-css-cli": "^4.0.9",
+    "codacy-coverage": "^2.0.1",
+    "eslint": "^3.18.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^2.1.1",
+    "fast-html-parser": "^1.0.1",
+    "istanbul": "^0.4.5",
+    "mkdirp": "^0.5.1",
+    "mocha": "^3.2.0",
+    "nopt": "^4.0.1",
+    "postcss-cli": "^3.0.0",
+    "uglifyjs": "^2.4.10",
+    "hapi": "^15.2.3"
+  },
+  "license": "MIT",
+  "files": [
+    "src",
+    "dist",
+    "typescript"
+  ]
+}

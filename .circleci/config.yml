@@ -1,0 +1,41 @@
+version: 2
+
+jobs:
+  build-lint-test:
+    working_directory: ~/dependency_spy
+    docker:
+      - image: circleci/ruby:2.3.7
+    steps:
+      - checkout
+
+      - name: Install Bundler Version
+        type: shell
+        command: gem install bundler -v 1.16
+
+      - name: Restore cache
+        type: cache-restore
+        key: yavdb-{{ checksum "Gemfile.lock" }}
+
+      - name: Bundle Install
+        type: shell
+        command: bundle install --path /tmp/vendor/bundle
+
+      - name: Save cache
+        type: cache-save
+        key: yavdb-{{ checksum "Gemfile.lock" }}
+        paths:
+          - /tmp/vendor/bundle
+
+      - name: Rubocop
+        type: shell
+        command: bundle exec rubocop
+
+      - name: Tests
+        type: shell
+        command: bundle exec rake
+
+workflows:
+  version: 2
+  test-and-publish:
+    jobs:
+      - build-lint-test
