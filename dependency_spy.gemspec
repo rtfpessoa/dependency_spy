@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
 
   # Runtime
   spec.add_runtime_dependency 'bibliothecary', ['~> 6.3']
-  spec.add_runtime_dependency 'semantic_range', ['~> 2.0']
   spec.add_runtime_dependency 'thor', ['~> 0.20']
-  spec.add_runtime_dependency 'yavdb', ['0.1.0-alpha.1']
+  spec.add_runtime_dependency 'yavdb', ['0.1.0.pre.alpha.2']
+  spec.add_runtime_dependency 'semantic_range', ['~> 2.0']
 end

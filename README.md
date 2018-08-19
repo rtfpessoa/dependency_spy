@@ -34,8 +34,10 @@ Use as a complement to other tools at your own risk.
 ## Installation
 
 ```sh
-bundle exec rake install
+gem install dependency_spy --pre
 ```
+
+> Notice the `--pre` in the end
 
 ## Usage
 
