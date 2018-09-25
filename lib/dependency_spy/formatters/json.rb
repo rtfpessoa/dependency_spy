@@ -22,6 +22,7 @@ module DependencySpy
         filtered_manifests = manifests.map do |manifest|
           manifest[:dependencies] = manifest[:dependencies].map do |dependency|
             next unless dependency[:vulnerabilities].any?
+
             dependency[:vulnerabilities] = dependency[:vulnerabilities].map(&:to_map)
             dependency
           end.reject(&:nil?).map(&:to_map)

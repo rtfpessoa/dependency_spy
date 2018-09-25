@@ -16,14 +16,12 @@
 
 module DependencySpy
 
-  class Manifest <
-
-    Struct.new(
-      :platform, # [String]
-      :path, # [String]
-      :kind, # [String]
-      :dependencies # Array[Dependency]
-    )
+  class Manifest < Struct.new(
+    :platform, # [String]
+    :path, # [String]
+    :kind, # [String]
+    :dependencies # Array[Dependency]
+  )
 
     def to_map
       map = {}
@@ -47,14 +45,12 @@ module DependencySpy
 
   end
 
-  class Dependency <
-
-    Struct.new(
-      :name, # [String]
-      :version, # [String]
-      :type, # [String]
-      :vulnerabilities # Array[Advisory]
-    )
+  class Dependency < Struct.new(
+    :name, # [String]
+    :version, # [String]
+    :type, # [String]
+    :vulnerabilities # Array[Advisory]
+  )
 
     def to_map
       map = {}

@@ -31,12 +31,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
 
   # Linters
-  spec.add_development_dependency 'rubocop', ['~> 0.58']
-  spec.add_development_dependency 'rubocop-rspec', ['~> 1.27']
+  spec.add_development_dependency 'rubocop', ['~> 0.59']
+  spec.add_development_dependency 'rubocop-rspec', ['~> 1.29']
 
   # Runtime
   spec.add_runtime_dependency 'bibliothecary', ['~> 6.3']
-  spec.add_runtime_dependency 'thor', ['~> 0.20']
-  spec.add_runtime_dependency 'yavdb', ['0.1.0.pre.alpha.2']
   spec.add_runtime_dependency 'semantic_range', ['~> 2.1']
+  spec.add_runtime_dependency 'thor', ['~> 0.20']
+  spec.add_runtime_dependency 'yavdb', ['0.1']
 end

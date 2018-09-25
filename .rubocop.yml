@@ -81,6 +81,8 @@ Layout/EmptyLinesAroundBlockBody:
 Layout/EmptyLinesAroundClassBody:
   Enabled: true
   EnforcedStyle: empty_lines_except_namespace
+  Exclude:
+  - "lib/dependency_spy/dtos/dependency.rb"
 
 Layout/EmptyLinesAroundMethodBody:
   Enabled: true
