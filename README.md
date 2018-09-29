@@ -4,11 +4,11 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/5ae8d9aa788e4855965974f480a0b91b)](https://www.codacy.com/app/rtfpessoa/dependency_spy?utm_source=github.com&utm_medium=referral&utm_content=rtfpessoa/dependency_spy&utm_campaign=Badge_Coverage)
 [![CircleCI](https://circleci.com/gh/rtfpessoa/dependency_spy.svg?style=svg)](https://circleci.com/gh/rtfpessoa/dependency_spy)
 
-Finds known vulnerabilities in your dependencies
+Finds known vulnerabilities in your dependencies using [yavdb](https://github.com/rtfpessoa/yavdb) as the source agregator of vulnerabilities.
 
 Thanks to the amazing work done by [libraries.io](https://libraries.io/) all the dependency manifest parsing is
 handled by [bibliothecary](https://github.com/librariesio/bibliothecary) and this means we have support for more than 20
-package managers. Due to the limited sources of information we only have identified vulnerabilities for the ones listed below.
+package managers. Due to the limited sources of information we only have identified vulnerabilities for the ones listed in [yavdb](https://github.com/rtfpessoa/yavdb#yet-another-vulnerability-database).
 
 ## Disclaimer
 
@@ -34,10 +34,8 @@ Use as a complement to other tools at your own risk.
 ## Installation
 
 ```sh
-gem install dependency_spy --pre
+gem install dependency_spy
 ```
-
-> Notice the `--pre` in the end
 
 ## Usage
 
@@ -56,6 +54,7 @@ depspy
 
 #### Features/Improvements
 
+- [ ] Ignore vulnerabilities
 - [ ] Improve output formatters
 - [ ] Add more output options
 
