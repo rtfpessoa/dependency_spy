@@ -47,7 +47,7 @@ RSpec.describe DependencySpy::API do
       manifests       = detected_manifests.select { |m| m.platform == 'rubygems' }
       dependencies    = manifests.map(&:dependencies).flatten
       vulnerabilities = dependencies.map(&:vulnerabilities).flatten
-      expect(vulnerabilities).to have(11).items
+      expect(vulnerabilities).to have(3).items
     end
   end
 end

@@ -26,6 +26,10 @@ jobs:
         paths:
           - /tmp/vendor/bundle
 
+      - name: Vulnerable dependencies
+        type: shell
+        command: bundle exec depspy check --files Gemfile,Gemfile.lock
+
       - name: Rubocop
         type: shell
         command: bundle exec rubocop

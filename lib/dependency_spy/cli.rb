@@ -40,13 +40,14 @@ module DependencySpy
 
     desc('check', 'Check dependencies for known vulnerabilities')
     method_option('path', :aliases => :p, :type => :string, :default => Dir.pwd)
+    method_option('files', :type => :string)
     method_option('formatter', :aliases => :f, :type => :string, :enum => FORMATTERS.map { |f| f.name.split('::').last.downcase }, :default => FORMATTERS.first.name.split('::').last.downcase)
     method_option('platform', :aliases => :m, :type => :string, :enum => YAVDB::Constants::POSSIBLE_PACKAGE_MANAGERS.map(&:downcase))
     method_option('output-path', :aliases => :o, :type => :string)
     method_option('database-path', :type => :string, :aliases => :p, :default => YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
 
     def check
-      manifests = API.check(options['path'], options['platform'], options['database-path'])
+      manifests = API.check(options['path'], options['files'], options['platform'], options['database-path'])
 
       formatted_output =
         FORMATTERS
@@ -58,6 +59,11 @@ module DependencySpy
       else
         DependencySpy::Outputs::StdOut.write(formatted_output)
       end
+
+      has_vulnerabilities =
+        manifests.any? { |manifest| manifest.dependencies.any? { |dependency| dependency.vulnerabilities.any? } }
+
+      exit(1) if has_vulnerabilities
     end
 
     method_option('vuln-db-path', :aliases => :d, :type => :string, :default => YAVDB::Constants::DEFAULT_YAVDB_PATH)

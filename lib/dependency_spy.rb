@@ -28,7 +28,7 @@ require_relative 'dependency_spy/semver'
 module DependencySpy
   class API
 
-    def self.check(path = Dir.pwd, platform = nil, database_path = YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
+    def self.check(path = Dir.pwd, files = nil, platform = nil, database_path = YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
       unless File.exist?(database_path)
         puts 'Could not find local vulnerability database, going to download the database.'
         YAVDB::API.download_database(false, YAVDB::Constants::DEFAULT_YAVDB_PATH)
@@ -36,7 +36,9 @@ module DependencySpy
 
       path             = File.expand_path(path)
       package_managers = find_platform(platform)
-      file_list        = if File.file?(path)
+      file_list        = if !files.nil?
+                           files.split(',')
+                         elsif File.file?(path)
                            path = File.dirname(path)
                            [File.basename(path)]
                          else
@@ -61,9 +63,11 @@ module DependencySpy
             unaffected = vuln.unaffected_versions ? vuln.unaffected_versions.any? { |vu| DependencySpy::SemVer.intersects(vu, version) } : false
             patched    = vuln.patched_versions ? vuln.patched_versions.any? { |vp| DependencySpy::SemVer.intersects(vp, version) } : false
 
-            vulnerable ||
-              (vuln.unaffected_versions&.any? && !unaffected) ||
-              (vuln.patched_versions&.any? && !patched)
+            if unaffected || patched
+              false
+            else
+              vulnerable
+            end
           end
 
           Dependency.new(package_name, version, type, vulnerabilities.uniq)
