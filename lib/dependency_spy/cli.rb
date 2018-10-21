@@ -45,9 +45,10 @@ module DependencySpy
     method_option('platform', :aliases => :m, :type => :string, :enum => YAVDB::Constants::POSSIBLE_PACKAGE_MANAGERS.map(&:downcase))
     method_option('output-path', :aliases => :o, :type => :string)
     method_option('database-path', :type => :string, :aliases => :p, :default => YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
+    method_option('offline', :type => :boolean, :default => false)
 
     def check
-      manifests = API.check(options['path'], options['files'], options['platform'], options['database-path'])
+      manifests = API.check(options['path'], options['files'], options['platform'], options['database-path'], options['offline'])
 
       formatted_output =
         FORMATTERS

@@ -28,9 +28,12 @@ require_relative 'dependency_spy/semver'
 module DependencySpy
   class API
 
-    def self.check(path = Dir.pwd, files = nil, platform = nil, database_path = YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
-      unless File.exist?(database_path)
-        puts 'Could not find local vulnerability database, going to download the database.'
+    def self.check(path = Dir.pwd, files = nil, platform = nil, database_path = YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH, offline = false)
+      if !File.exist?(database_path) && offline
+        puts 'No local database found. Cannot obtain database since offline mode is enabled.'
+        exit(10)
+      elsif !offline
+        puts 'Going to update the local vulnerability database.'
         YAVDB::API.download_database(false, YAVDB::Constants::DEFAULT_YAVDB_PATH)
       end
 
