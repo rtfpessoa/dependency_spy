@@ -53,7 +53,7 @@ module DependencySpy
       def self.apply_style(formatted_output, severity_threshold)
         formatted_output.split("\n").map do |line|
           severity = line.match('Severity: (.*)')
-          if severity && DependencySpy::Helper.is_severity_above_threshold?(severity[1].downcase, severity_threshold)
+          if severity && DependencySpy::Helper.severity_above_threshold?(severity[1].downcase, severity_threshold)
             line.red
           else
             line
