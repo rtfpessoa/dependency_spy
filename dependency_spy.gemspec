@@ -39,4 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'semantic_range', ['~> 2.1']
   spec.add_runtime_dependency 'thor', ['~> 0.20']
   spec.add_runtime_dependency 'yavdb', ['~> 0.4']
+  spec.add_runtime_dependency 'colorize', ['~> 0.8.1']
 end
