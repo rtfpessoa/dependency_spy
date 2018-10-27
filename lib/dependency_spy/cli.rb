@@ -23,6 +23,7 @@ require_relative 'formatters/json'
 require_relative 'formatters/yaml'
 require_relative 'outputs/stdout'
 require_relative 'outputs/file'
+require_relative 'helper/helper'
 
 module DependencySpy
   class CLI < Thor
@@ -36,6 +37,8 @@ module DependencySpy
       DependencySpy::Formatters::Yaml
     ]
 
+    SEVERITY_OPTIONS = %w(low medium high)
+
     class_option('verbose', :type => :boolean, :default => false)
 
     desc('check', 'Check dependencies for known vulnerabilities')
@@ -46,8 +49,9 @@ module DependencySpy
     method_option('output-path', :aliases => :o, :type => :string)
     method_option('database-path', :type => :string, :aliases => :p, :default => YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
     method_option('offline', :type => :boolean, :default => false)
-
+    method_option('severity-threshold', :aliases => :s, :type => :string, :enum => SEVERITY_OPTIONS, :default => 'low')
     def check
+      severity_threshold = options['severity-threshold'] || 'low'
       manifests = API.check(options['path'], options['files'], options['platform'], options['database-path'], options['offline'])
 
       formatted_output =
@@ -58,11 +62,19 @@ module DependencySpy
       if options['output-path']
         DependencySpy::Outputs::FileSystem.write(options['output-path'], formatted_output)
       else
+        formatted_output =
+            DependencySpy::Formatters::Text.apply_style(formatted_output, severity_threshold) if options['formatter'] == 'text'
         DependencySpy::Outputs::StdOut.write(formatted_output)
       end
 
       has_vulnerabilities =
-        manifests.any? { |manifest| manifest.dependencies.any? { |dependency| dependency.vulnerabilities.any? } }
+        manifests.any? do |manifest|
+          manifest.dependencies.any? do |dependency|
+            dependency.vulnerabilities.any? do |vuln|
+              DependencySpy::Helper.is_severity_above_threshold?(vuln.severity, severity_threshold)
+            end
+          end
+        end
 
       exit(1) if has_vulnerabilities
     end

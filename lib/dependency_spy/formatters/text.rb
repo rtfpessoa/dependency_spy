@@ -13,6 +13,8 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+require 'colorize'
+require_relative '../helper/helper'
 
 module DependencySpy
   class Formatters
@@ -46,6 +48,17 @@ module DependencySpy
         else
           'No known vulnerabilities were found in your dependencies.'
         end
+      end
+
+      def self.apply_style(formatted_output, severity_threshold)
+        formatted_output.split("\n").map do |line|
+          severity = line.match('Severity: (.*)')
+          if severity && DependencySpy::Helper.is_severity_above_threshold?(severity[1].downcase, severity_threshold)
+            line.red
+          else
+            line
+          end
+        end.join("\n")
       end
 
     end
