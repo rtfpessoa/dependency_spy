@@ -64,7 +64,7 @@ module DependencySpy
       else
         if options['formatter'] == 'text'
           formatted_output =
-              DependencySpy::Formatters::Text.apply_style(formatted_output, severity_threshold)
+            DependencySpy::Formatters::Text.apply_style(formatted_output, severity_threshold)
         end
         DependencySpy::Outputs::StdOut.write(formatted_output)
       end
