@@ -37,7 +37,7 @@ module DependencySpy
       DependencySpy::Formatters::Yaml
     ]
 
-    SEVERITY_OPTIONS = %w(low medium high)
+    SEVERITY_OPTIONS = ['low', 'medium', 'high']
 
     class_option('verbose', :type => :boolean, :default => false)
 
@@ -62,8 +62,10 @@ module DependencySpy
       if options['output-path']
         DependencySpy::Outputs::FileSystem.write(options['output-path'], formatted_output)
       else
-        formatted_output =
-            DependencySpy::Formatters::Text.apply_style(formatted_output, severity_threshold) if options['formatter'] == 'text'
+        if options['formatter'] == 'text'
+          formatted_output =
+              DependencySpy::Formatters::Text.apply_style(formatted_output, severity_threshold)
+        end
         DependencySpy::Outputs::StdOut.write(formatted_output)
       end
 
@@ -71,7 +73,7 @@ module DependencySpy
         manifests.any? do |manifest|
           manifest.dependencies.any? do |dependency|
             dependency.vulnerabilities.any? do |vuln|
-              DependencySpy::Helper.is_severity_above_threshold?(vuln.severity, severity_threshold)
+              DependencySpy::Helper.severity_above_threshold?(vuln.severity, severity_threshold)
             end
           end
         end
