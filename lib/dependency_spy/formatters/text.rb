@@ -20,7 +20,7 @@ module DependencySpy
   class Formatters
     class Text
 
-      def self.format(manifests)
+      def self.format(manifests, severity_threshold = nil)
         manifests_text = manifests.map do |manifest|
           manifest_header = "#{manifest.platform}: #{manifest.kind} ~> #{manifest.path} "
           manifest_body = manifest.dependencies.map do |package|
@@ -31,8 +31,11 @@ module DependencySpy
               first = "        Title: #{vuln.title}\n"
               second = "        Severity: #{(vuln.severity || 'unknown').capitalize}\n"
               third = "        Source: #{vuln.source_url}\n\n"
-
-              "#{first}#{second}#{third}"
+              if severity_threshold && DependencySpy::Helper.severity_above_threshold?(vuln.severity, severity_threshold)
+                "#{first}#{second}#{third}".red
+              else
+                "#{first}#{second}#{third}"
+              end
             end
 
             "#{package_header}\n#{package_body.join("\n")}"
@@ -48,17 +51,6 @@ module DependencySpy
         else
           'No known vulnerabilities were found in your dependencies.'
         end
-      end
-
-      def self.apply_style(formatted_output, severity_threshold)
-        formatted_output.split("\n").map do |line|
-          severity = line.match('Severity: (.*)')
-          if severity && DependencySpy::Helper.severity_above_threshold?(severity[1].downcase, severity_threshold)
-            line.red
-          else
-            line
-          end
-        end.join("\n")
       end
 
     end
