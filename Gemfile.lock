@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dependency_spy (0.2.2)
+    dependency_spy (0.3.0)
       bibliothecary (~> 6.3)
       colorize (~> 0.8.1)
       semantic_range (~> 2.1)
