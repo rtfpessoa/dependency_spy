@@ -13,12 +13,14 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+require 'colorize'
+require_relative '../helper/helper'
 
 module DependencySpy
   class Formatters
     class Text
 
-      def self.format(manifests)
+      def self.format(manifests, severity_threshold = nil)
         manifests_text = manifests.map do |manifest|
           manifest_header = "#{manifest.platform}: #{manifest.kind} ~> #{manifest.path} "
           manifest_body = manifest.dependencies.map do |package|
@@ -29,8 +31,11 @@ module DependencySpy
               first = "        Title: #{vuln.title}\n"
               second = "        Severity: #{(vuln.severity || 'unknown').capitalize}\n"
               third = "        Source: #{vuln.source_url}\n\n"
-
-              "#{first}#{second}#{third}"
+              if severity_threshold && DependencySpy::Helper.severity_above_threshold?(vuln.severity, severity_threshold)
+                "#{first}#{second}#{third}".red
+              else
+                "#{first}#{second}#{third}"
+              end
             end
 
             "#{package_header}\n#{package_body.join("\n")}"

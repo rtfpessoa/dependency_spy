@@ -23,6 +23,7 @@ require_relative 'formatters/json'
 require_relative 'formatters/yaml'
 require_relative 'outputs/stdout'
 require_relative 'outputs/file'
+require_relative 'helper/helper'
 
 module DependencySpy
   class CLI < Thor
@@ -46,14 +47,18 @@ module DependencySpy
     method_option('output-path', :aliases => :o, :type => :string)
     method_option('database-path', :type => :string, :aliases => :p, :default => YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
     method_option('offline', :type => :boolean, :default => false)
-
+    method_option('severity-threshold', :aliases => :s, :type => :string, :enum => YAVDB::Constants::SEVERITIES, :default => 'low')
+    method_option('with-color', :type => :boolean, :default => true)
     def check
       manifests = API.check(options['path'], options['files'], options['platform'], options['database-path'], options['offline'])
 
-      formatted_output =
-        FORMATTERS
-          .find { |f| f.name.split('::').last.downcase == options['formatter'] }
-          .format(manifests)
+      formatted_output = if (options['formatter'] == 'text') && !options['output-path'] && options['with-color']
+                           DependencySpy::Formatters::Text.format(manifests, options['severity-threshold'])
+                         else
+                           FORMATTERS
+                             .find { |f| f.name.split('::').last.downcase == options['formatter'] }
+                             .format(manifests)
+                         end
 
       if options['output-path']
         DependencySpy::Outputs::FileSystem.write(options['output-path'], formatted_output)
@@ -62,7 +67,13 @@ module DependencySpy
       end
 
       has_vulnerabilities =
-        manifests.any? { |manifest| manifest[:dependencies]&.any? { |dependency| dependency[:vulnerabilities]&.any? } }
+        manifests.any? do |manifest|
+          manifest[:dependencies]&.any? do |dependency|
+            dependency[:vulnerabilities]&.any? do |vuln|
+              DependencySpy::Helper.severity_above_threshold?(vuln.severity, options['severity-threshold'])
+            end
+          end
+        end
 
       exit(1) if has_vulnerabilities
     end
