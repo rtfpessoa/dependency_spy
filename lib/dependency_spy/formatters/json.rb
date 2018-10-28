@@ -20,18 +20,15 @@ module DependencySpy
 
       def self.format(manifests)
         filtered_manifests = manifests.map do |manifest|
-          manifest[:dependencies] = manifest[:dependencies].map do |dependency|
-            next unless dependency[:vulnerabilities].any?
-
-            dependency[:vulnerabilities] = dependency[:vulnerabilities].map(&:to_map)
-            dependency
-          end.reject(&:nil?).map(&:to_map)
-          manifest
+          vulnerable_dependencies      = manifest[:dependencies]
+                                           .select { |dependency| dependency[:vulnerabilities].any? }
+          manifest_copy                = Marshal.load(Marshal.dump(manifest))
+          manifest_copy[:dependencies] = vulnerable_dependencies
+          manifest_copy
         end
 
         filtered_manifests
           .reject { |m| m[:dependencies].nil? }
-          .map(&:to_map)
           .map(&:to_json)
       end
 

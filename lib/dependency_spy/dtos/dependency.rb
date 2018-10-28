@@ -26,21 +26,25 @@ module DependencySpy
     def to_map
       map = {}
       members.each do |m|
-        next unless self[m] && (
-        (self[m].is_a?(String) && !self[m].empty?) ||
-          (self[m].is_a?(Array) && self[m].any?))
-
-        map[m.to_s] = self[m] if self[m]
+        if !self[m] ||
+          (self[m].is_a?(String) && self[m].empty?) ||
+          (self[m].is_a?(Array) && self[m].none?)
+          next
+        elsif self[m].is_a?(Struct)
+          map[m.to_s] = self[m].to_map
+        else
+          map[m.to_s] = self[m]
+        end
       end
       map
     end
 
-    def to_json(*attrs)
-      to_map.to_json(*attrs)
+    def to_json(*args)
+      to_map.to_json(*args)
     end
 
-    def to_yaml(*attrs)
-      to_map.to_yaml(*attrs)
+    def to_yaml(*args)
+      to_map.to_yaml(*args)
     end
 
   end
@@ -55,11 +59,15 @@ module DependencySpy
     def to_map
       map = {}
       members.each do |m|
-        next unless self[m] && (
-        (self[m].is_a?(String) && !self[m].empty?) ||
-          (self[m].is_a?(Array) && self[m].any?))
-
-        map[m.to_s] = self[m] if self[m]
+        if !self[m] ||
+          (self[m].is_a?(String) && self[m].empty?) ||
+          (self[m].is_a?(Array) && self[m].none?)
+          next
+        elsif self[m].is_a?(Struct)
+          map[m.to_s] = self[m].to_map
+        else
+          map[m.to_s] = self[m]
+        end
       end
       map
     end

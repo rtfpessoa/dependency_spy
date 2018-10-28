@@ -62,7 +62,7 @@ module DependencySpy
       end
 
       has_vulnerabilities =
-        manifests.any? { |manifest| manifest.dependencies.any? { |dependency| dependency.vulnerabilities.any? } }
+        manifests.any? { |manifest| manifest[:dependencies]&.any? { |dependency| dependency[:vulnerabilities]&.any? } }
 
       exit(1) if has_vulnerabilities
     end
