@@ -27,8 +27,8 @@ module DependencySpy
       map = {}
       members.each do |m|
         if !self[m] ||
-          (self[m].is_a?(String) && self[m].empty?) ||
-          (self[m].is_a?(Array) && self[m].none?)
+           (self[m].is_a?(String) && self[m].empty?) ||
+           (self[m].is_a?(Array) && self[m].none?)
           next
         elsif self[m].is_a?(Struct)
           map[m.to_s] = self[m].to_map
@@ -60,8 +60,8 @@ module DependencySpy
       map = {}
       members.each do |m|
         if !self[m] ||
-          (self[m].is_a?(String) && self[m].empty?) ||
-          (self[m].is_a?(Array) && self[m].none?)
+           (self[m].is_a?(String) && self[m].empty?) ||
+           (self[m].is_a?(Array) && self[m].none?)
           next
         elsif self[m].is_a?(Struct)
           map[m.to_s] = self[m].to_map
