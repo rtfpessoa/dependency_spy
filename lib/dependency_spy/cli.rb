@@ -49,23 +49,22 @@ module DependencySpy
     method_option('output-path', :aliases => :o, :type => :string)
     method_option('database-path', :type => :string, :aliases => :p, :default => YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
     method_option('offline', :type => :boolean, :default => false)
-    method_option('severity-threshold', :aliases => :s, :type => :string, :enum => SEVERITY_OPTIONS, :default => 'low')
+    method_option('severity-threshold', :aliases => :s, :type => :string, :enum => YAVDB::Constants::SEVERITIES, :default => 'low')
+    method_option('with-color', :type => :boolean, :default => true)
     def check
-      severity_threshold = options['severity-threshold'] || 'low'
       manifests = API.check(options['path'], options['files'], options['platform'], options['database-path'], options['offline'])
 
-      formatted_output =
-        FORMATTERS
-          .find { |f| f.name.split('::').last.downcase == options['formatter'] }
-          .format(manifests)
+      formatted_output = if (options['formatter'] == 'text') && !options['output-path'] && options['with-color']
+                           DependencySpy::Formatters::Text.format(manifests, options['severity-threshold'])
+                         else
+                           FORMATTERS
+                             .find { |f| f.name.split('::').last.downcase == options['formatter'] }
+                             .format(manifests)
+                         end
 
       if options['output-path']
         DependencySpy::Outputs::FileSystem.write(options['output-path'], formatted_output)
       else
-        if options['formatter'] == 'text'
-          formatted_output =
-            DependencySpy::Formatters::Text.apply_style(formatted_output, severity_threshold)
-        end
         DependencySpy::Outputs::StdOut.write(formatted_output)
       end
 
@@ -73,7 +72,7 @@ module DependencySpy
         manifests.any? do |manifest|
           manifest.dependencies.any? do |dependency|
             dependency.vulnerabilities.any? do |vuln|
-              DependencySpy::Helper.severity_above_threshold?(vuln.severity, severity_threshold)
+              DependencySpy::Helper.severity_above_threshold?(vuln.severity, options['severity-threshold'])
             end
           end
         end
