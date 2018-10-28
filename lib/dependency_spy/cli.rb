@@ -36,9 +36,7 @@ module DependencySpy
       DependencySpy::Formatters::Json,
       DependencySpy::Formatters::Yaml
     ]
-
-    SEVERITY_OPTIONS = ['low', 'medium', 'high']
-
+    
     class_option('verbose', :type => :boolean, :default => false)
 
     desc('check', 'Check dependencies for known vulnerabilities')
