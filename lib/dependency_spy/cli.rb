@@ -36,7 +36,7 @@ module DependencySpy
       DependencySpy::Formatters::Json,
       DependencySpy::Formatters::Yaml
     ]
-    
+
     class_option('verbose', :type => :boolean, :default => false)
 
     desc('check', 'Check dependencies for known vulnerabilities')
