@@ -30,7 +30,7 @@ module DependencySpy
 
     def self.check(options)
       path = options[:path] || Dir.pwd
-      files = options[:file]
+      files = options[:files]
       platform = options[:platform]
       database_path = options[:database_path] || YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH
       offline = options[:offline] || false
