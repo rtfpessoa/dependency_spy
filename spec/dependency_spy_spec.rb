@@ -18,7 +18,7 @@ require 'spec_helper'
 
 RSpec.describe DependencySpy::API do
   describe 'check' do
-    detected_manifests = DependencySpy::API.check({ path: 'examples' })
+    detected_manifests = DependencySpy::API.check(:path => 'examples')
 
     it 'can read all manifests inside examples' do
       expect(detected_manifests).to have(5).items
@@ -57,7 +57,7 @@ RSpec.describe DependencySpy::API do
       select_count = vulnerabilities.select { |v| v.id == 'snykio:rubygems:rubocop:CVE-2017-8418' }.count
       expect(select_count).to be(1)
 
-      filtered_detected_manifests = DependencySpy::API.check({ path: 'examples', ignore: ['snykio:rubygems:rubocop:CVE-2017-8418'] })
+      filtered_detected_manifests = DependencySpy::API.check(:path => 'examples', :ignore => ['snykio:rubygems:rubocop:CVE-2017-8418'])
       manifests       = filtered_detected_manifests.select { |m| m.platform == 'rubygems' }
       dependencies    = manifests.map(&:dependencies).flatten
       vulnerabilities = dependencies.map(&:vulnerabilities).flatten
