@@ -8,17 +8,15 @@ jobs:
     steps:
       - checkout
 
-      - name: Install Bundler Version
-        type: shell
-        command: gem install bundler -v 1.16
-
       - name: Restore cache
         type: cache-restore
         key: yavdb-{{ checksum "Gemfile.lock" }}
 
       - name: Bundle Install
         type: shell
-        command: bundle install --path /tmp/vendor/bundle
+        command: |
+          sudo gem update --system
+          bundle install --path /tmp/vendor/bundle
 
       - name: Save cache
         type: cache-save

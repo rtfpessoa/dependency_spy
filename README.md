@@ -26,11 +26,11 @@ Use as a complement to other tools at your own risk.
 * Packagist
 * Pypi
 * Go
+* Cargo
 
 ## Prerequisites
 
 * Ruby 2.3 or newer
-* Bundler `gem install bundler`
 
 ## Installation
 
