@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.executables   = ['dependency_spy', 'depspy']
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.3.7'
+  spec.required_ruby_version = '>= 2.5.5'
 
   # Development
   spec.add_development_dependency 'codacy-coverage'
@@ -34,9 +34,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-rspec', ['~> 1.29']
 
   # Runtime
-  spec.add_runtime_dependency 'bibliothecary', ['~> 6.3']
-  spec.add_runtime_dependency 'colorize', ['~> 0.8.1']
-  spec.add_runtime_dependency 'semantic_range', ['~> 2.1']
+  spec.add_runtime_dependency 'bibliothecary', ['~> 6.6']
+  spec.add_runtime_dependency 'colorize', ['0.8.1']
+  spec.add_runtime_dependency 'semantic_range', ['~> 2.2']
   spec.add_runtime_dependency 'thor', ['~> 0.20']
   spec.add_runtime_dependency 'yavdb', ['~> 0.5']
 end

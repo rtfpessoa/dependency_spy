@@ -42,6 +42,7 @@ module DependencySpy
       private
 
       def parse(version_or_range, loose = false)
+        version_or_range = '>= 0.0.0' if version_or_range == '*'
         return version_or_range if version_or_range.is_a?(SemanticRange::Range) ||
                                    version_or_range.is_a?(SemanticRange::Version)
 

@@ -57,7 +57,7 @@ AllCops:
   DefaultFormatter: progress
   UseCache: false
   DisplayCopNames: false
-  TargetRubyVersion: 2.3.7
+  TargetRubyVersion: 2.5.5
 
 Gemspec/OrderedDependencies:
   Enabled: true
@@ -94,18 +94,18 @@ Layout/EmptyLinesAroundModuleBody:
 Layout/ExtraSpacing:
   Enabled: true
 
-Layout/FirstParameterIndentation:
+Layout/IndentFirstArgument:
   Enabled: true
   EnforcedStyle: consistent
   IndentationWidth: 2
 
-Layout/IndentArray:
+Layout/IndentFirstArrayElement:
   Enabled: true
 
 Layout/IndentAssignment:
   Enabled: true
 
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   Enabled: true
 
 Layout/MultilineHashBraceLayout:

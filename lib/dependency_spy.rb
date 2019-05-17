@@ -40,13 +40,12 @@ module DependencySpy
       path             = File.expand_path(path)
       package_managers = find_platform(platform)
       file_list        = if !files.nil?
-                           files.split(',')
+                           files.split(',').map { |f| "#{path}/#{f}" }
                          elsif File.file?(path)
                            path = File.dirname(path)
                            [File.basename(path)]
                          else
-                           cmd = `find #{path} -type f | grep -vE "#{Bibliothecary.ignored_files_regex}"`
-                           cmd.split("\n").sort
+                           Bibliothecary.load_file_info_list(path).map(&:full_path)
                          end
       manifests        = package_managers.map { |pm| pm.analyse(path, file_list) }.flatten.compact
       manifests.map do |manifest|
