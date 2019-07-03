@@ -49,8 +49,9 @@ module DependencySpy
     method_option('offline', :type => :boolean, :default => false)
     method_option('severity-threshold', :aliases => :s, :type => :string, :enum => YAVDB::Constants::SEVERITIES, :default => 'low')
     method_option('with-color', :type => :boolean, :default => true)
+    method_option('ignore', :aliases => :i, :type => :array, :default => [])
     def check
-      manifests = API.check(options['path'], options['files'], options['platform'], options['database-path'], options['offline'])
+      manifests = API.check(options)
 
       formatted_output = if (options['formatter'] == 'text') && !options['output-path'] && options['with-color']
                            DependencySpy::Formatters::Text.format(manifests, options['severity-threshold'])
