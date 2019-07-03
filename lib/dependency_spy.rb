@@ -28,7 +28,14 @@ require_relative 'dependency_spy/semver'
 module DependencySpy
   class API
 
-    def self.check(path = Dir.pwd, files = nil, platform = nil, database_path = YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH, offline = false)
+    def self.check(options)
+      path = options[:path] || Dir.pwd
+      files = options[:files]
+      platform = options[:platform]
+      database_path = options[:database_path] || YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH
+      offline = options[:offline] || false
+      ignore = options[:ignore] || []
+
       if !File.exist?(database_path) && offline
         puts 'No local database found. Cannot obtain database since offline mode is enabled.'
         exit(10)
@@ -64,8 +71,9 @@ module DependencySpy
             vulnerable = vuln.vulnerable_versions ? vuln.vulnerable_versions.any? { |vv| DependencySpy::SemVer.intersects(vv, version) } : false
             unaffected = vuln.unaffected_versions ? vuln.unaffected_versions.any? { |vu| DependencySpy::SemVer.intersects(vu, version) } : false
             patched    = vuln.patched_versions ? vuln.patched_versions.any? { |vp| DependencySpy::SemVer.intersects(vp, version) } : false
+            ignored    = ignore.include?(vuln.id)
 
-            if unaffected || patched
+            if unaffected || patched || ignored
               false
             else
               vulnerable
