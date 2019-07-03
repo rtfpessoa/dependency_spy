@@ -34,7 +34,7 @@ RSpec.describe DependencySpy::API do
       manifests       = detected_manifests.select { |m| m.platform == 'npm' }
       dependencies    = manifests.map(&:dependencies).flatten
       vulnerabilities = dependencies.map(&:vulnerabilities).flatten
-      expect(vulnerabilities).to have(118).items
+      expect(vulnerabilities).to have(121).items
     end
 
     it 'can read all dependencies for rubygems manifest' do
@@ -54,15 +54,15 @@ RSpec.describe DependencySpy::API do
       manifests       = detected_manifests.select { |m| m.platform == 'rubygems' }
       dependencies    = manifests.map(&:dependencies).flatten
       vulnerabilities = dependencies.map(&:vulnerabilities).flatten
-      select_count = vulnerabilities.select { |v| v.id == 'snykio:rubygems:rubocop:CVE-2017-8418' }.count
-      expect(select_count).to be(1)
+      select_count = vulnerabilities.select { |v| v.id == 'snykio:rubygems:rubocop:20447' }.count
+      expect(select_count).to eq(1)
 
-      filtered_detected_manifests = DependencySpy::API.check(:path => 'examples', :ignore => ['snykio:rubygems:rubocop:CVE-2017-8418'])
+      filtered_detected_manifests = DependencySpy::API.check(:path => 'examples', :ignore => ['snykio:rubygems:rubocop:20447'])
       manifests       = filtered_detected_manifests.select { |m| m.platform == 'rubygems' }
       dependencies    = manifests.map(&:dependencies).flatten
       vulnerabilities = dependencies.map(&:vulnerabilities).flatten
-      select_count = vulnerabilities.select { |v| v.id == 'snykio:rubygems:rubocop:CVE-2017-8418' }.count
-      expect(select_count).to be(0)
+      select_count = vulnerabilities.select { |v| v.id == 'snykio:rubygems:rubocop:20447' }.count
+      expect(select_count).to eq(0)
     end
   end
 end

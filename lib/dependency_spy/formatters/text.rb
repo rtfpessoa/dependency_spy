@@ -28,13 +28,15 @@ module DependencySpy
 
             package_header = "    Vulnerable: #{package.name}/#{package.type}:#{package.version}"
             package_body = package.vulnerabilities.map do |vuln|
-              first = "        Title: #{vuln.title}\n"
-              second = "        Severity: #{(vuln.severity || 'unknown').capitalize}\n"
-              third = "        Source: #{vuln.source_url}\n\n"
+              body = ''
+              body += "        Title: #{vuln.title}\n"
+              body += "        Severity: #{(vuln.severity || 'unknown').capitalize}\n"
+              body += "        Source: #{vuln.source_url}\n"
+              body += "        Identifier: #{vuln.id}\n\n"
               if severity_threshold && DependencySpy::Helper.severity_above_threshold?(vuln.severity, severity_threshold)
-                "#{first}#{second}#{third}".red
+                body.red
               else
-                "#{first}#{second}#{third}"
+                body
               end
             end
 

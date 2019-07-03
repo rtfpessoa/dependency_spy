@@ -29,7 +29,7 @@ module DependencySpy
 
         filtered_manifests
           .reject { |m| m[:dependencies].nil? }
-          .map(&:to_json)
+          .to_yaml
       end
 
     end
