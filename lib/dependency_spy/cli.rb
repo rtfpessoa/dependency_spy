@@ -51,7 +51,10 @@ module DependencySpy
     method_option('with-color', :type => :boolean, :default => true)
     method_option('ignore', :aliases => :i, :type => :array, :default => [])
     def check
-      manifests = API.check(options)
+      the_options = options.dup
+      the_options[:database_path] = the_options[:"database-path"]
+      the_options.freeze
+      manifests = API.check(the_options)
 
       formatted_output = if (options['formatter'] == 'text') && !options['output-path'] && options['with-color']
                            DependencySpy::Formatters::Text.format(manifests, options['severity-threshold'])
