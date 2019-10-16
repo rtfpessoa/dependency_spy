@@ -67,7 +67,8 @@ module DependencySpy
 
       api_options = the_options.transform_keys(&:to_sym)
       api_options[:database_path] = api_options[:'database-path']
-      the_options.freeze; api_options.freeze
+      the_options.freeze
+      api_options.freeze
       manifests = API.check(api_options)
 
       formatted_output = if (the_options['formatter'] == 'text') && !the_options['output-path'] && the_options['with-color']

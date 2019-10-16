@@ -1,4 +1,3 @@
-
 # dependency_spy - Finds known vulnerabilities in your dependencies
 # Copyright (C) 2017-2018 Rodrigo Fernandes
 #
@@ -18,7 +17,7 @@
 require 'spec_helper'
 
 RSpec::Matchers.define :superset_of do |desired|
-  match { |actual| desired.map{|k,v| actual[k] === v}.all? }
+  match { |actual| desired.map { |k, v| actual[k] == v }.all? }
 end
 
 RSpec.describe DependencySpy::CLI do
@@ -40,7 +39,7 @@ RSpec.describe DependencySpy::CLI do
       api_call_args = {
         :formatter => 'json'
       }
-      expect(DependencySpy::ConfigFile).to receive(:get_config).and_return({'formatter' => 'json'})
+      expect(DependencySpy::ConfigFile).to receive(:get_config).and_return('formatter' => 'json')
       expect(DependencySpy::API).to receive(:check).with(superset_of(api_call_args)).and_return([])
       DependencySpy::CLI.new.check
     end
@@ -52,7 +51,7 @@ RSpec.describe DependencySpy::CLI do
       }
       # allow(Thor).to receive(:options){{ 'offline' => false }}
       cli = DependencySpy::CLI.new([], 'offline' => false)
-      expect(DependencySpy::ConfigFile).to receive(:get_config).and_return({'formatter' => 'json', 'offline' => true})
+      expect(DependencySpy::ConfigFile).to receive(:get_config).and_return('formatter' => 'json', 'offline' => true)
       expect(DependencySpy::API).to receive(:check).with(superset_of(api_call_args)).and_return([])
       cli.check
     end
