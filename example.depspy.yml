@@ -1,0 +1,12 @@
+path: '/path/to/files' # Path to find files. DEFAULT: Dir.pwd
+files: 'comma.sep,file.list' # Specific file list relative to `path`. DEFAULT: All files
+formatter: 'text' # Output format. DEFAULT: text; AVAILABLE: text,json,yaml
+platform: 'rubygems' # Supported YAVDB package manager lookup. DEFAULT: not specified (ALL); AVAILABLE: (See: https://github.com/rtfpessoa/yavdb/blob/master/lib/yavdb/constants.rb#L31)
+output-path: '/path/to/output' # Path to generate report to. DEFAULT: not specified (console output)
+database-path: '/path/to/yavdb/database' # Path to find/store local YAVDB DB. DEFAULT: YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH (See: https://github.com/rtfpessoa/yavdb/blob/master/lib/yavdb/constants.rb#L28)
+offline: false # Operate in offline mode (don't try to get YAVDB). Must have local YAVDB available. DEFAULT: false; AVAILABLE: true,false
+severity-threshold: 'low' # Threshold for non-zero exit status. Doesn't change output. DEFAULT: 'low'; AVAILABLE: (See: https://github.com/rtfpessoa/yavdb/blob/master/lib/yavdb/constants.rb#L33)
+with-color: true # Generate colored console output. DEFAULT: true; AVAILABLE: true,false
+ignore: # A list of all YAVDB vulnerability identifiers to ignore. Removes from output.
+  - "identifier:to:ignore:19551105"
+vuln-db-path: '/path/to/yavdb' # Path to local YAVDB for updating. DEFAULT: YAVDB::Constants::DEFAULT_YAVDB_PATH (See: https://github.com/rtfpessoa/yavdb/blob/master/lib/yavdb/constants.rb#L27)
