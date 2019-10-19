@@ -29,6 +29,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
 SimpleCov.start
 
 require 'dependency_spy'
+require 'dependency_spy/cli'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

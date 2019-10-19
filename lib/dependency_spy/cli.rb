@@ -24,6 +24,7 @@ require_relative 'formatters/yaml'
 require_relative 'outputs/stdout'
 require_relative 'outputs/file'
 require_relative 'helper/helper'
+require_relative 'helper/config_file'
 
 module DependencySpy
   class CLI < Thor
@@ -37,35 +38,49 @@ module DependencySpy
       DependencySpy::Formatters::Yaml
     ]
 
-    class_option('verbose', :type => :boolean, :default => false)
+    class_option('verbose', :type => :boolean)
 
     desc('check', 'Check dependencies for known vulnerabilities')
-    method_option('path', :aliases => :p, :type => :string, :default => Dir.pwd)
+    method_option('config-file-path', :aliases => :c, :type => :string)
+    method_option('path', :aliases => :p, :type => :string)
     method_option('files', :type => :string)
-    method_option('formatter', :aliases => :f, :type => :string, :enum => FORMATTERS.map { |f| f.name.split('::').last.downcase }, :default => FORMATTERS.first.name.split('::').last.downcase)
+    method_option('formatter', :aliases => :f, :type => :string, :enum => FORMATTERS.map { |f| f.name.split('::').last.downcase })
     method_option('platform', :aliases => :m, :type => :string, :enum => YAVDB::Constants::POSSIBLE_PACKAGE_MANAGERS.map(&:downcase))
     method_option('output-path', :aliases => :o, :type => :string)
-    method_option('database-path', :type => :string, :aliases => :p, :default => YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH)
-    method_option('offline', :type => :boolean, :default => false)
-    method_option('severity-threshold', :aliases => :s, :type => :string, :enum => YAVDB::Constants::SEVERITIES, :default => 'low')
-    method_option('with-color', :type => :boolean, :default => true)
-    method_option('ignore', :aliases => :i, :type => :array, :default => [])
+    method_option('database-path', :type => :string, :aliases => :p)
+    method_option('offline', :type => :boolean)
+    method_option('severity-threshold', :aliases => :s, :type => :string, :enum => YAVDB::Constants::SEVERITIES)
+    method_option('with-color', :type => :boolean)
+    method_option('ignore', :aliases => :i, :type => :array)
     def check
-      the_options = options.dup
-      the_options[:database_path] = the_options[:"database-path"]
-      the_options.freeze
-      manifests = API.check(the_options)
+      defaults = {
+        'verbose' => false,
+        'path' => Dir.pwd,
+        'formatter' => FORMATTERS.first.name.split('::').last.downcase,
+        'database-path' => YAVDB::Constants::DEFAULT_YAVDB_DATABASE_PATH,
+        'offline' => false,
+        'severity-threshold' => 'low',
+        'with-color' => true,
+        'ignore' => []
+      }
+      the_options = defaults.merge(options)
 
-      formatted_output = if (options['formatter'] == 'text') && !options['output-path'] && options['with-color']
-                           DependencySpy::Formatters::Text.format(manifests, options['severity-threshold'])
+      api_options = the_options.transform_keys(&:to_sym)
+      api_options[:database_path] = api_options[:'database-path']
+      the_options.freeze
+      api_options.freeze
+      manifests = API.check(api_options)
+
+      formatted_output = if (the_options['formatter'] == 'text') && !the_options['output-path'] && the_options['with-color']
+                           DependencySpy::Formatters::Text.format(manifests, the_options['severity-threshold'])
                          else
                            FORMATTERS
-                             .find { |f| f.name.split('::').last.downcase == options['formatter'] }
+                             .find { |f| f.name.split('::').last.downcase == the_options['formatter'] }
                              .format(manifests)
                          end
 
-      if options['output-path']
-        DependencySpy::Outputs::FileSystem.write(options['output-path'], formatted_output)
+      if the_options['output-path']
+        DependencySpy::Outputs::FileSystem.write(the_options['output-path'], formatted_output)
       else
         DependencySpy::Outputs::StdOut.write(formatted_output)
       end
@@ -74,7 +89,7 @@ module DependencySpy
         manifests.any? do |manifest|
           manifest[:dependencies]&.any? do |dependency|
             dependency[:vulnerabilities]&.any? do |vuln|
-              DependencySpy::Helper.severity_above_threshold?(vuln.severity, options['severity-threshold'])
+              DependencySpy::Helper.severity_above_threshold?(vuln.severity, the_options['severity-threshold'])
             end
           end
         end
@@ -82,11 +97,25 @@ module DependencySpy
       exit(1) if has_vulnerabilities
     end
 
-    method_option('vuln-db-path', :aliases => :d, :type => :string, :default => YAVDB::Constants::DEFAULT_YAVDB_PATH)
+    method_option('vuln-db-path', :aliases => :d, :type => :string)
     desc('update', 'Download or update database from the official yavdb repository.')
 
     def update
-      API.update(options['vuln-db-path'])
+      defaults = {
+        'verbose' => false,
+        'vuln-db-path' => YAVDB::Constants::DEFAULT_YAVDB_PATH
+      }
+      the_options = defaults.merge(options)
+      the_options.freeze
+      API.update(the_options['vuln-db-path'])
+    end
+
+    private
+
+    def options
+      cli_options = super
+      config_file_options = DependencySpy::ConfigFile.get_config(cli_options[:'config-file-path'])
+      config_file_options.merge(cli_options)
     end
 
   end
