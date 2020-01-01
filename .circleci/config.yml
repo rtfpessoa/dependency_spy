@@ -16,6 +16,7 @@ jobs:
         type: shell
         command: |
           sudo gem update --system
+          gem install bundler
           bundle install --path /tmp/vendor/bundle
 
       - name: Save cache
