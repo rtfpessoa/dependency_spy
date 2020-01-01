@@ -1,59 +1,65 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
 AllCops:
   # Include common Ruby source files.
   Include:
-  - '**/*.builder'
-  - '**/*.fcgi'
-  - '**/*.gemspec'
-  - '**/*.god'
-  - '**/*.jb'
-  - '**/*.jbuilder'
-  - '**/*.mspec'
-  - '**/*.opal'
-  - '**/*.pluginspec'
-  - '**/*.podspec'
-  - '**/*.rabl'
-  - '**/*.rake'
-  - '**/*.rb'
-  - '**/*.rbuild'
-  - '**/*.rbw'
-  - '**/*.rbx'
-  - '**/*.ru'
-  - '**/*.ruby'
-  - '**/*.spec'
-  - '**/*.thor'
-  - '**/*.watchr'
-  - '**/.irbrc'
-  - '**/.pryrc'
-  - '**/buildfile'
-  - '**/config.ru'
-  - '**/Appraisals'
-  - '**/Berksfile'
-  - '**/Brewfile'
-  - '**/Buildfile'
-  - '**/Capfile'
-  - '**/Cheffile'
-  - '**/Dangerfile'
-  - '**/Deliverfile'
-  - '**/Fastfile'
-  - '**/*Fastfile'
-  - '**/Gemfile'
-  - '**/Guardfile'
-  - '**/Jarfile'
-  - '**/Mavenfile'
-  - '**/Podfile'
-  - '**/Puppetfile'
-  - '**/Rakefile'
-  - '**/Snapfile'
-  - '**/Thorfile'
-  - '**/Vagabondfile'
-  - '**/Vagrantfile'
+    - "**/*.builder"
+    - "**/*.fcgi"
+    - "**/*.gemspec"
+    - "**/*.god"
+    - "**/*.jb"
+    - "**/*.jbuilder"
+    - "**/*.mspec"
+    - "**/*.opal"
+    - "**/*.pluginspec"
+    - "**/*.podspec"
+    - "**/*.rabl"
+    - "**/*.rake"
+    - "**/*.rb"
+    - "**/*.rbuild"
+    - "**/*.rbw"
+    - "**/*.rbx"
+    - "**/*.ru"
+    - "**/*.ruby"
+    - "**/*.spec"
+    - "**/*.thor"
+    - "**/*.watchr"
+    - "**/.irbrc"
+    - "**/.pryrc"
+    - "**/buildfile"
+    - "**/config.ru"
+    - "**/Appraisals"
+    - "**/Berksfile"
+    - "**/Brewfile"
+    - "**/Buildfile"
+    - "**/Capfile"
+    - "**/Cheffile"
+    - "**/Dangerfile"
+    - "**/Deliverfile"
+    - "**/Fastfile"
+    - "**/*Fastfile"
+    - "**/Gemfile"
+    - "**/Guardfile"
+    - "**/Jarfile"
+    - "**/Mavenfile"
+    - "**/Podfile"
+    - "**/Puppetfile"
+    - "**/Rakefile"
+    - "**/Snapfile"
+    - "**/Thorfile"
+    - "**/Vagabondfile"
+    - "**/Vagrantfile"
   Exclude:
-  - 'database/**/*'
-  - 'db/**/*'
-  - 'tmp/**/*'
-  - 'vendor/**/*'
-  - 'bin/**/*'
-  - 'log/**/*'
+    - "database/**/*"
+    - "db/**/*"
+    - "tmp/**/*"
+    - "vendor/**/*"
+    - "bin/**/*"
+    - "log/**/*"
   DefaultFormatter: progress
   UseCache: false
   DisplayCopNames: false
@@ -82,7 +88,7 @@ Layout/EmptyLinesAroundClassBody:
   Enabled: true
   EnforcedStyle: empty_lines_except_namespace
   Exclude:
-  - "lib/dependency_spy/dtos/dependency.rb"
+    - "lib/dependency_spy/dtos/dependency.rb"
 
 Layout/EmptyLinesAroundMethodBody:
   Enabled: true
@@ -94,18 +100,18 @@ Layout/EmptyLinesAroundModuleBody:
 Layout/ExtraSpacing:
   Enabled: true
 
-Layout/IndentFirstArgument:
+Layout/FirstArgumentIndentation:
   Enabled: true
   EnforcedStyle: consistent
   IndentationWidth: 2
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   Enabled: true
 
-Layout/IndentAssignment:
+Layout/AssignmentIndentation:
   Enabled: true
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   Enabled: true
 
 Layout/MultilineHashBraceLayout:
@@ -122,7 +128,7 @@ Layout/MultilineOperationIndentation:
 Layout/SpaceAfterComma:
   Enabled: true
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: true
   EnforcedStyle: with_fixed_indentation
 
@@ -153,7 +159,7 @@ Lint/UselessAccessModifier:
 Lint/UselessAssignment:
   Enabled: true
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Enabled: true
 
 Metrics/AbcSize:
@@ -164,7 +170,7 @@ Metrics/BlockLength:
   Enabled: true
   Max: 51
   Exclude:
-  - "spec/snyk_io_spec.rb"
+    - "spec/snyk_io_spec.rb"
 
 Metrics/ClassLength:
   Enabled: false
@@ -174,7 +180,7 @@ Metrics/CyclomaticComplexity:
   Enabled: false
   Max: 15
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
   Max: 147
 
@@ -316,10 +322,10 @@ Style/TrailingCommaInHashLiteral:
   Enabled: true
   EnforcedStyleForMultiline: no_comma
 
-Style/UnneededInterpolation:
+Style/RedundantInterpolation:
   Enabled: true
 
-Style/UnneededPercentQ:
+Style/RedundantPercentQ:
   Enabled: true
 
 Style/WhileUntilDo:

@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
 
   # Linters
   spec.add_development_dependency 'rubocop', ['~> 0.59']
+  spec.add_development_dependency 'rubocop-performance', ['~> 1.5']
   spec.add_development_dependency 'rubocop-rspec', ['~> 1.29']
 
   # Runtime

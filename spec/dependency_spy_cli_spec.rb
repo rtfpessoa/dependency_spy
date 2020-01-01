@@ -22,7 +22,7 @@ end
 
 RSpec.describe DependencySpy::CLI do
   describe 'check' do
-    it 'should call API with defaults given no config file' do
+    it 'calls API with defaults given no config file' do
       api_call_defaults = {
         :verbose => false,
         :path => Dir.pwd,
@@ -32,25 +32,25 @@ RSpec.describe DependencySpy::CLI do
         :ignore => []
       }
       expect(DependencySpy::API).to receive(:check).with(superset_of(api_call_defaults)).and_return([])
-      DependencySpy::CLI.new.check
+      described_class.new.check
     end
 
-    it 'should call API with overridden given a config file' do
+    it 'calls API with overridden given a config file' do
       api_call_args = {
         :formatter => 'json'
       }
       expect(DependencySpy::ConfigFile).to receive(:get_config).and_return('formatter' => 'json')
       expect(DependencySpy::API).to receive(:check).with(superset_of(api_call_args)).and_return([])
-      DependencySpy::CLI.new.check
+      described_class.new.check
     end
 
-    it 'should call API with overridden given a config file and command line override' do
+    it 'calls API with overridden given a config file and command line override' do
       api_call_args = {
         :formatter => 'json',
         :offline => false
       }
       # allow(Thor).to receive(:options){{ 'offline' => false }}
-      cli = DependencySpy::CLI.new([], 'offline' => false)
+      cli = described_class.new([], 'offline' => false)
       expect(DependencySpy::ConfigFile).to receive(:get_config).and_return('formatter' => 'json', 'offline' => true)
       expect(DependencySpy::API).to receive(:check).with(superset_of(api_call_args)).and_return([])
       cli.check
