@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dependency_spy (0.6.0)
+    dependency_spy (0.6.1)
       bibliothecary (~> 6.6)
       colorize (= 0.8.1)
       semantic_range (~> 2.2)
@@ -39,9 +39,10 @@ GEM
     highline (2.0.3)
     jaro_winkler (1.5.4)
     json (2.3.0)
-    kramdown (2.1.0)
+    kramdown (2.3.0)
+      rexml
     librariesio-gem-parser (1.0.0)
-    libv8 (3.16.14.19)
+    libv8 (3.16.14.19-x86_64-linux)
     oga (2.15)
       ast
       ruby-ll (~> 2.1)
@@ -52,6 +53,7 @@ GEM
     rainbow (3.0.0)
     rake (13.0.1)
     ref (2.0.0)
+    rexml (3.2.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -130,4 +132,4 @@ DEPENDENCIES
   simplecov
 
 BUNDLED WITH
-   2.1.2
+   2.1.4

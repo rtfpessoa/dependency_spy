@@ -34,7 +34,7 @@ RSpec.describe DependencySpy::API do
       manifests       = detected_manifests.select { |m| m.platform == 'npm' }
       dependencies    = manifests.map(&:dependencies).flatten
       vulnerabilities = dependencies.map(&:vulnerabilities).flatten
-      expect(vulnerabilities).to have(148).items
+      expect(vulnerabilities).to have(194).items
     end
 
     it 'can read all dependencies for rubygems manifest' do
@@ -47,7 +47,7 @@ RSpec.describe DependencySpy::API do
       manifests       = detected_manifests.select { |m| m.platform == 'rubygems' }
       dependencies    = manifests.map(&:dependencies).flatten
       vulnerabilities = dependencies.map(&:vulnerabilities).flatten
-      expect(vulnerabilities).to have(4).items
+      expect(vulnerabilities).to have(7).items
     end
 
     it 'can ignore vulnerabilities by id' do
