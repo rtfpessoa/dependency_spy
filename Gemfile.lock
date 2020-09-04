@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dependency_spy (0.6.0)
+    dependency_spy (0.6.1)
       bibliothecary (~> 6.6)
       colorize (= 0.8.1)
       semantic_range (~> 2.2)
@@ -42,7 +42,7 @@ GEM
     kramdown (2.3.0)
       rexml
     librariesio-gem-parser (1.0.0)
-    libv8 (3.16.14.19)
+    libv8 (3.16.14.19-x86_64-linux)
     oga (2.15)
       ast
       ruby-ll (~> 2.1)
@@ -132,4 +132,4 @@ DEPENDENCIES
   simplecov
 
 BUNDLED WITH
-   2.1.2
+   2.1.4
