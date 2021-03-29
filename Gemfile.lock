@@ -39,10 +39,10 @@ GEM
     highline (2.0.3)
     jaro_winkler (1.5.4)
     json (2.3.0)
-    kramdown (2.3.0)
+    kramdown (2.3.1)
       rexml
     librariesio-gem-parser (1.0.0)
-    libv8 (3.16.14.19-x86_64-linux)
+    libv8 (3.16.14.19)
     oga (2.15)
       ast
       ruby-ll (~> 2.1)
